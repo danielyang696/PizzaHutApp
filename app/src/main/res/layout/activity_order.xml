@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OrderActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="請選擇主餐"
+            android:textSize="18sp"
+            android:padding="8dp" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_main_dish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/radio_pizza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="披薩" />
+
+            <RadioButton
+                android:id="@+id/radio_pasta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="義大利麵" />
+
+            <RadioButton
+                android:id="@+id/radio_rice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="焗烤飯" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btn_submit_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="確認選擇" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
