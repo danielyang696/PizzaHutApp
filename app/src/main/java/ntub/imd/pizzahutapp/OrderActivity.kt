@@ -28,7 +28,7 @@ class OrderActivity : AppCompatActivity() {
                 val selectedRadioButton = findViewById<RadioButton>(selectedId)
                 val mainDish = selectedRadioButton.text.toString()
                 val resultIntent = Intent()
-                resultIntent.putExtra("order", mainDish)
+                resultIntent.putExtra("mainDish", mainDish)
                 setResult(Activity.RESULT_OK, resultIntent)
                 finish()
             }
