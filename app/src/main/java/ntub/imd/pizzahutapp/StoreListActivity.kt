@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.EditText // 確保導入 EditText
+import android.widget.EditText
 import android.widget.ListView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +26,8 @@ class StoreListActivity : AppCompatActivity() {
 
         adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, storeList)
         storeListView.adapter = adapter
+
+        loadStoreList() // 載入資料
 
         btnAddStore.setOnClickListener {
             showAddStoreDialog()
@@ -57,8 +59,11 @@ class StoreListActivity : AppCompatActivity() {
             .setPositiveButton("新增") { _, _ ->
                 val name = editStoreName.text.toString()
                 val phone = editStorePhone.text.toString()
-                storeList.add("$name - $phone")
-                adapter.notifyDataSetChanged()
+                if (name.isNotBlank() && phone.isNotBlank()) {
+                    storeList.add("$name - $phone")
+                    adapter.notifyDataSetChanged()
+                    saveStoreList()
+                }
             }
             .setNegativeButton("取消", null)
             .show()
@@ -79,10 +84,30 @@ class StoreListActivity : AppCompatActivity() {
             .setPositiveButton("更新") { _, _ ->
                 val name = editStoreName.text.toString()
                 val phone = editStorePhone.text.toString()
-                storeList[position] = "$name - $phone"
-                adapter.notifyDataSetChanged()
+                if (name.isNotBlank() && phone.isNotBlank()) {
+                    storeList[position] = "$name - $phone"
+                    adapter.notifyDataSetChanged()
+                    saveStoreList()
+                }
             }
             .setNegativeButton("取消", null)
             .show()
+    }
+
+    // 儲存資料到 SharedPreferences
+    private fun saveStoreList() {
+        val prefs = getSharedPreferences("store_prefs", MODE_PRIVATE)
+        prefs.edit()
+            .putStringSet("store_list", storeList.toSet())
+            .apply()
+    }
+
+    // 從 SharedPreferences 讀取資料
+    private fun loadStoreList() {
+        val prefs = getSharedPreferences("store_prefs", MODE_PRIVATE)
+        val savedSet = prefs.getStringSet("store_list", emptySet())
+        storeList.clear()
+        storeList.addAll(savedSet!!.sorted()) // 加上排序讓 UI 一致
+        adapter.notifyDataSetChanged()
     }
 }
